@@ -25,32 +25,54 @@ namespace CMP1903_A1_2324
 
             if (gameChoice == "1")
             {
-                Game.SevensOut playSeven = new Game.SevensOut();
-                Console.WriteLine("Points: " + playSeven.DiceGame());
-            }
-            else if(gameChoice == "2")
-            {
-                while ((Statistics.player1Points < 20) && (Statistics.player2Points < 20))
-                {
-                    Game.ThreeOrMore playThree = new Game.ThreeOrMore();
-                    Console.WriteLine("points: " + playThree.DiceGame2());
-                }
 
-                if (Statistics.player1Points > Statistics.player2Points)
+                SevensOut playSevenP1 = new SevensOut();
+                Statistics.player1Points = playSevenP1.DiceGame();
+                Console.WriteLine("Player 1 Points: " + Statistics.player1Points + "\n");
+                
+                SevensOut playSevenComp = new SevensOut();
+                Statistics.computerPoints = playSevenComp.DiceGame();
+                Console.WriteLine("Computer Points: " + Statistics.computerPoints + "\n");
+
+                if (Statistics.player1Points > Statistics.computerPoints)
                 {
                     Console.WriteLine("Player 1 Wins");
                 }
 
-                else if (Statistics.player1Points == Statistics.player2Points)
+                else if (Statistics.player1Points == Statistics.computerPoints)
                 {
                     Console.WriteLine("Draw");
                 }
 
                 else
                 {
-                    Console.WriteLine("Player 2 Wins");
+                    Console.WriteLine("Computer Wins");
                 }
-                // figure out point system for both players
+
+            }
+            else if(gameChoice == "2")
+            {
+                while ((Statistics.player1Points < 20) && (Statistics.computerPoints < 20))
+                {
+                    Game.ThreeOrMore playThree = new Game.ThreeOrMore();
+                    Console.WriteLine("points: " + playThree.DiceGame2() + "\n");
+                }
+
+                if (Statistics.player1Points > Statistics.computerPoints)
+                {
+                    Console.WriteLine("Player 1 Wins");
+                }
+
+                else if (Statistics.player1Points == Statistics.computerPoints)
+                {
+                    Console.WriteLine("Draw");
+                }
+
+                else
+                {
+                    Console.WriteLine("Computer Wins");
+                }
+                
 
             }
             Console.ReadKey();
@@ -59,7 +81,13 @@ namespace CMP1903_A1_2324
         // SevensOut game
         internal class SevensOut
         {
-            
+            private int _RollTotal;
+            public int RollTotal
+            {
+                get { return _RollTotal; }
+                set { _RollTotal = value; }
+            }
+
             public int DiceGame()
             {
                 Die die1 = new Die();
@@ -68,7 +96,7 @@ namespace CMP1903_A1_2324
                 int roll1 = die1.Roll();
                 int roll2 = die2.Roll();
 
-                int RollTotal = roll1 + roll2;
+                RollTotal = roll1 + roll2;
 
                 if (Game.isTesting == false)
                 {
@@ -87,7 +115,7 @@ namespace CMP1903_A1_2324
                 }
                 else
                 {
-                    Console.WriteLine("Your Total is 7, Game Ended.");
+                    Console.WriteLine("Total is 7, Game Ended.");
                     return 0;
                 }
             }
