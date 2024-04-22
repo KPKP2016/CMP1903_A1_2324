@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography.X509Certificates;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CMP1903_A1_2324
 {
@@ -19,42 +21,53 @@ namespace CMP1903_A1_2324
 
             while ((gameChoice != "1") && (gameChoice != "2"))
             {
+                Console.WriteLine("Invalid input");
                 Console.WriteLine("SevensOut or ThreeOrMore? (1,2): ");
                 gameChoice = Console.ReadLine();
             }
 
             if (gameChoice == "1")
             {
+                while (true)
+                { 
+                    if (Statistics.player1Points == 7)
+                    {
+                        Console.WriteLine("Player 1 Lost");
+                        break;
+                    }
+                    else if (Statistics.computerPoints == 7)
+                    {
+                        Console.WriteLine("Computer Lost");
+                        break;
+                    }
+                    else
+                    {
+                        SevensOut playSevenP1 = new SevensOut();
+                        Console.WriteLine("Player 1 Points: " + playSevenP1.DiceGame() + "\n");
 
-                SevensOut playSevenP1 = new SevensOut();
-                Statistics.player1Points = playSevenP1.DiceGame();
-                Console.WriteLine("Player 1 Points: " + Statistics.player1Points + "\n");
-                
-                SevensOut playSevenComp = new SevensOut();
-                Statistics.computerPoints = playSevenComp.DiceGame();
-                Console.WriteLine("Computer Points: " + Statistics.computerPoints + "\n");
-
-                if (Statistics.player1Points > Statistics.computerPoints)
-                {
-                    Console.WriteLine("Player 1 Wins");
+                        SevensOut playSevenComp = new SevensOut();
+                        Console.WriteLine("Computer Points: " + playSevenComp.DiceGame() + "\n");
+                    }
                 }
 
-                else if (Statistics.player1Points == Statistics.computerPoints)
-                {
-                    Console.WriteLine("Draw");
-                }
-
-                else
-                {
-                    Console.WriteLine("Computer Wins");
-                }
 
             }
+
             else if(gameChoice == "2")
             {
-                while ((Statistics.player1Points < 20) && (Statistics.computerPoints < 20))
+                while ((Statistics.player1Points < 20) || (Statistics.computerPoints < 20))
                 {
-                    Game.ThreeOrMore playThree = new Game.ThreeOrMore();
+                    ThreeOrMore playThree = new ThreeOrMore();
+
+                    if (Statistics.player1 == true)
+                    {
+                        Console.WriteLine("Player 1 points: " + playThree.DiceGame2() + "\n");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Computer points: " + playThree.DiceGame2() + "\n");
+                    }
+
                     Console.WriteLine("points: " + playThree.DiceGame2() + "\n");
                 }
 
@@ -72,8 +85,6 @@ namespace CMP1903_A1_2324
                 {
                     Console.WriteLine("Computer Wins");
                 }
-                
-
             }
             Console.ReadKey();
         }
@@ -96,34 +107,61 @@ namespace CMP1903_A1_2324
                 int roll1 = die1.Roll();
                 int roll2 = die2.Roll();
 
+                Console.WriteLine("\nDie 1: " + roll1);
+                Console.WriteLine("Die 2: " + roll2);
+
                 RollTotal = roll1 + roll2;
 
-                if (Game.isTesting == false)
+                if (roll1 == roll2)
                 {
-                    Console.WriteLine("Die 1: " + roll1);
-                    Console.WriteLine("Die 2: " + roll2);
+                    RollTotal = (RollTotal) * 2;
+                    return RollTotal;
                 }
 
-                if (RollTotal != 7)
+                else if (RollTotal != 7)
                 {
-                    return RollTotal;
+                    if (Statistics.player1 == true)
+                    {
+                        Statistics.player1Points = RollTotal;
+
+                        Statistics.player1 = false;
+                        Statistics.computer = true;
+
+                        return Statistics.player1Points;
+                    }
+                    else
+                    {
+                        Statistics.computerPoints = RollTotal;
+
+                        Statistics.computer = false;
+                        Statistics.player1 = true;
+
+                        return Statistics.computerPoints;
+                    }
                 }
-                else if (die1 == die2)
-                {
-                    RollTotal = (roll1 + roll2) * 2;
-                    return RollTotal;
-                }
+
                 else
                 {
-                    Console.WriteLine("Total is 7, Game Ended.");
+                    if (Statistics.player1 == true)
+                    {
+                    Statistics.player1Points = RollTotal;
+                    Console.WriteLine("Total is 7");
                     return 0;
+                    }
+                    else
+                    {
+                        Statistics.computerPoints = RollTotal;
+                        Console.WriteLine("Total is 7");
+                        return 0;
+                    }
+
                 }
             }
         }
 
+        // ThreeOrMore Game
         internal class ThreeOrMore
         {
-
             public int DiceGame2()
             {
                 List<int> rolledList = new List<int>();
@@ -157,38 +195,58 @@ namespace CMP1903_A1_2324
 
                 int rollNumber = duplicates[biggest];
 
-                Console.WriteLine($"Most frequent die number is: {biggest+1}. Highest in-a-row: {rollNumber}");
 
+                if (Statistics.player1 == true)
+                {
+                    Console.WriteLine("\n---Player 1's turn---\n");
+                }
+                else
+                {
+                    Console.WriteLine("\n---Computer's turn---\n");
+                }
 
-                
-
-
-
+                Console.WriteLine($"Most frequent die number: {biggest+1}. Highest in-a-row: {rollNumber}");
 
                 try
                 {
                     if (rollNumber == 2)
                     {
-                        Console.WriteLine("Rethrow all die or remaining die. (1/2): ");
+                        Console.WriteLine("Rethrow all die or remaining die. (1/2):\n");
                         String retry = Console.ReadLine(); 
                         if (retry == "1")
                         {
                             Game.ThreeOrMore playThree = new Game.ThreeOrMore();
-                            Console.WriteLine(playThree.DiceGame2());
+                            playThree.DiceGame2();
                         }
                         else if (retry == "2")
                         {
                             Console.WriteLine("Rethrow other dice");
                         }
-
                     }
                     
                     else
                     {
                         if (pointSystem.TryGetValue(rollNumber, out int result))
                         {
-                            Console.WriteLine($"{ result} Points");
-                            Statistics.player1Points += result;
+
+                            
+                            if (Statistics.player1 == true)
+                            {
+                                Console.WriteLine($"+{result} Points to Player 1");
+                                Statistics.player1Points += result;
+
+                                Statistics.player1 = false;
+                                Statistics.computer = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"+{result} Points to Computer");
+                                Statistics.computerPoints += result;
+
+                                Statistics.computer = false;
+                                Statistics.player1 = true;
+                            }
+                            
                         }
 
                         else
@@ -203,44 +261,15 @@ namespace CMP1903_A1_2324
                     Console.WriteLine("Enter valid input. ");
                 }
 
-                return Statistics.player1Points;
-
-
- 
-
-                //for (int i = 0; i < rolledList.Count; i++)
-                //{
-                //    for (int j = 0; j < rolledList.Count; j++)
-                //    {
-                //        if (rolledList[i] == rolledList[j])
-                //        {
-                //            duplicates.Add(rolledList[i]);
-                //        }
-                //    }
-                //}
-
-                //duplicates.Sort();
-
-                //foreach (int item in duplicates)
-                //{
-                //    Console.WriteLine(item);
-                //}
-
-                //// do this
-
-                //if (Game.isTesting == false)
-                //{
-                //    Console.WriteLine("Die 1: " + roll1);
-                //    Console.WriteLine("Die 2: " + roll2);
-                //    Console.WriteLine("Die 3: " + roll3);
-                //    Console.WriteLine("Die 4: " + roll4);
-                //    Console.WriteLine("Die 5: " + roll5);
-                //    return 1;
-                //}
-                //else
-                //{
-                //    return 0;
-                //}
+                if (Statistics.player1 == true)
+                {
+                    return Statistics.player1Points;
+                }
+                else
+                {
+                    return Statistics.computerPoints;
+                }
+                
             }
         }
     }

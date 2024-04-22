@@ -8,7 +8,7 @@ namespace CMP1903_A1_2324
 {
     internal class Statistics
     {
-        public static bool player1 = false;
+        public static bool player1 = true;
         public static bool computer = false;
         
 
