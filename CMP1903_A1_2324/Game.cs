@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -30,23 +31,29 @@ namespace CMP1903_A1_2324
             {
                 while (true)
                 { 
+                    SevensOut playSevenP1 = new SevensOut();
+                    Console.WriteLine("Player 1 Points: " + playSevenP1.DiceGame() + "\n");
+
                     if (Statistics.player1Points == 7)
                     {
                         Console.WriteLine("Player 1 Lost");
                         break;
                     }
-                    else if (Statistics.computerPoints == 7)
-                    {
-                        Console.WriteLine("Computer Lost");
-                        break;
-                    }
+
                     else
                     {
-                        SevensOut playSevenP1 = new SevensOut();
-                        Console.WriteLine("Player 1 Points: " + playSevenP1.DiceGame() + "\n");
-
                         SevensOut playSevenComp = new SevensOut();
                         Console.WriteLine("Computer Points: " + playSevenComp.DiceGame() + "\n");
+                        
+                        if (Statistics.computerPoints == 7)
+                        {
+                            Console.WriteLine("Computer Lost");
+                            break;
+                        }
+                        else
+                        {
+                            continue;
+                        }
                     }
                 }
 
@@ -144,14 +151,18 @@ namespace CMP1903_A1_2324
                 {
                     if (Statistics.player1 == true)
                     {
-                    Statistics.player1Points = RollTotal;
-                    Console.WriteLine("Total is 7");
-                    return 0;
+                        Statistics.player1Points = RollTotal;
+                        Console.WriteLine("Player 1 Total is 7");
+                        return 0;
+                    }
+                    else if (Statistics.computer == true)
+                    {
+                        Statistics.computerPoints = RollTotal;
+                        Console.WriteLine("Computer Total is 7");
+                        return 0;
                     }
                     else
                     {
-                        Statistics.computerPoints = RollTotal;
-                        Console.WriteLine("Total is 7");
                         return 0;
                     }
 
