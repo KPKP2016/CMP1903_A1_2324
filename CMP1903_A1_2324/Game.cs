@@ -13,24 +13,15 @@ namespace CMP1903_A1_2324
     internal class Game
     {
         public static bool isTesting = false;
-
+        
         public static void Main(string[] _)
         {
-
-            Console.WriteLine("SevensOut or ThreeOrMore? (1,2): ");
-            String gameChoice = Console.ReadLine();
-
-            while ((gameChoice != "1") && (gameChoice != "2"))
-            {
-                Console.WriteLine("Invalid input");
-                Console.WriteLine("SevensOut or ThreeOrMore? (1,2): ");
-                gameChoice = Console.ReadLine();
-            }
+            string gameChoice = Menu();
 
             if (gameChoice == "1")
             {
                 while (true)
-                { 
+                {
                     SevensOut playSevenP1 = new SevensOut();
                     Console.WriteLine("Player 1 Points: " + playSevenP1.DiceGame() + "\n");
 
@@ -44,7 +35,7 @@ namespace CMP1903_A1_2324
                     {
                         SevensOut playSevenComp = new SevensOut();
                         Console.WriteLine("Computer Points: " + playSevenComp.DiceGame() + "\n");
-                        
+
                         if (Statistics.computerPoints == 7)
                         {
                             Console.WriteLine("Computer Lost");
@@ -56,13 +47,15 @@ namespace CMP1903_A1_2324
                         }
                     }
                 }
-
-
             }
 
-            else if(gameChoice == "2")
+
+
+
+
+            else if (gameChoice == "2")
             {
-                while ((Statistics.player1Points < 20) || (Statistics.computerPoints < 20))
+                while ((Statistics.player1Points < 20) && (Statistics.computerPoints < 20))
                 {
                     ThreeOrMore playThree = new ThreeOrMore();
 
@@ -93,7 +86,34 @@ namespace CMP1903_A1_2324
                     Console.WriteLine("Computer Wins");
                 }
             }
+
+
+
+
+
+            else if (gameChoice == "3")
+            {
+                Console.WriteLine("Player 1 Stats: ", Statistics.player1Points);
+                Console.WriteLine("Computer Stats: ", Statistics.computerPoints);
+
+            }
             Console.ReadKey();
+        }
+
+        private static string Menu()
+        {
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("SevensOut or ThreeOrMore or Stats (1,2,3): ");
+            String gameChoice = Console.ReadLine();
+
+            while ((gameChoice != "1") && (gameChoice != "2") && (gameChoice != "3"))
+            {
+                Console.WriteLine("Invalid input");
+                Console.WriteLine("SevensOut or ThreeOrMore or Stats (1,2,3): ");
+                gameChoice = Console.ReadLine();
+            }
+
+            return gameChoice;
         }
 
         // SevensOut game
@@ -153,12 +173,14 @@ namespace CMP1903_A1_2324
                     {
                         Statistics.player1Points = RollTotal;
                         Console.WriteLine("Player 1 Total is 7");
+                        Statistics.player1 = false;
                         return 0;
                     }
                     else if (Statistics.computer == true)
                     {
                         Statistics.computerPoints = RollTotal;
                         Console.WriteLine("Computer Total is 7");
+                        Statistics.computer = false;
                         return 0;
                     }
                     else
