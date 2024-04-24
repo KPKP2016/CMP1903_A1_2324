@@ -142,7 +142,29 @@ namespace CMP1903_A1_2324
                 if (roll1 == roll2)
                 {
                     RollTotal = (RollTotal) * 2;
-                    return RollTotal;
+
+                    if (Statistics.player1 == true)
+                    {
+                        Statistics.player1Points = RollTotal;
+
+                        Statistics.player1 = false;
+                        Statistics.computer = true;
+
+                        return Statistics.player1Points;
+                    }
+                    else if (Statistics.computer == true)
+                    {
+                        Statistics.computerPoints = RollTotal;
+
+                        Statistics.computer = false;
+                        Statistics.player1 = true;
+
+                        return Statistics.computerPoints;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                 }
 
                 else if (RollTotal != 7)
@@ -156,7 +178,7 @@ namespace CMP1903_A1_2324
 
                         return Statistics.player1Points;
                     }
-                    else
+                    else if (Statistics.computer == true)
                     {
                         Statistics.computerPoints = RollTotal;
 
@@ -165,6 +187,10 @@ namespace CMP1903_A1_2324
 
                         return Statistics.computerPoints;
                     }
+                    else
+                    {
+                        return 0;
+                    }   
                 }
 
                 else
