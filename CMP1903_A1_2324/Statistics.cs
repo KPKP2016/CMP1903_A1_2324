@@ -15,5 +15,8 @@ namespace CMP1903_A1_2324
         public static int player1Points;
         public static int computerPoints;
 
+        public static int totalPlayer1Points;
+        public static int totalComputerPoints;
+
     }
 }
