@@ -16,7 +16,7 @@ namespace CMP1903_A1_2324
 
         public static void Main(string[] _)
         {
-            
+            //Testing testing = new Testing();
 
             while (true)
             {
@@ -28,6 +28,9 @@ namespace CMP1903_A1_2324
                     {
                         SevensOut playSevenP1 = new SevensOut();
                         Console.WriteLine("Player 1 Points: " + playSevenP1.DiceGame() + "\n");
+
+                        Statistics.player1SevensScores.Add(Statistics.totalPlayer1Points);
+                        Statistics.computerSevensScores.Add(Statistics.totalComputerPoints);
 
                         if (Statistics.player1Points == 7)
                         {
@@ -74,6 +77,9 @@ namespace CMP1903_A1_2324
 
                     }
 
+                    Statistics.player1ThreeScores.Add(Statistics.totalPlayer1Points);
+                    Statistics.computerThreeScores.Add(Statistics.totalComputerPoints);
+
                     if (Statistics.player1Points > Statistics.computerPoints)
                     {
                         Console.WriteLine("Player 1 Wins");
@@ -96,9 +102,103 @@ namespace CMP1903_A1_2324
 
                 else if (gameChoice == "3")
                 {
-                    Console.WriteLine("\nPlayer 1 Stats: " + Statistics.totalPlayer1Points);
-                    Console.WriteLine("Computer Stats: " + Statistics.totalComputerPoints);
-                    
+                    Console.WriteLine("SevensOut stats or ThreeOrMore stats or Overall stats? (1/2/3): ");
+                    String statsChoice = Console.ReadLine();
+
+                    while ((statsChoice != "1") && (statsChoice != "2") && (statsChoice != "3"))
+                    {
+                        Console.WriteLine("Invalid Input");
+                        Console.WriteLine("SevensOut stats or ThreeOrMore stats? (1/2/3): ");
+                        statsChoice = Console.ReadLine();
+                    }
+
+                    if (statsChoice == "1")
+                    {
+                        Console.WriteLine("\nPlayer 1 SevensOut Stats:");
+
+                        int p1GameIndex = 1;
+                        foreach (int p1Game in Statistics.player1SevensScores)
+                        {
+                            Console.WriteLine("Game " + p1GameIndex + ": " + p1Game);
+                            p1GameIndex ++;
+                        }
+
+                        Console.WriteLine("\nComputer SevensOut Stats:");
+
+                        int compGameIndex = 1;
+                        foreach (int compGame in Statistics.computerSevensScores)
+                        {
+                            Console.WriteLine("Game " + compGameIndex + ": " + compGame);
+                            compGameIndex++;
+                        }
+                    }
+
+                    else if (statsChoice == "2")
+                    {
+                        Console.WriteLine("\nPlayer 1 ThreeOrMore Stats:");
+
+                        int p1GameIndex = 1;
+                        foreach (int p1Game in Statistics.player1ThreeScores)
+                        {
+                            Console.WriteLine("Game " + p1GameIndex + ": " + p1Game);
+                            p1GameIndex++;
+                        }
+
+                        Console.WriteLine("\nComputer ThreeOrMore Stats:");
+
+                        int compGameIndex = 1;
+                        foreach (int compGame in Statistics.computerThreeScores)
+                        {
+                            Console.WriteLine("Game " + compGameIndex + ": " + compGame);
+                            compGameIndex++;
+                        }
+                    }
+
+
+                    else if (statsChoice == "3")
+                    {
+                        Console.WriteLine("\nPlayer 1 SevensOut Stats:");
+
+                        int p1GameIndex = 1;
+                        foreach (int p1Game in Statistics.player1SevensScores)
+                        {
+                            Console.WriteLine("Game " + p1GameIndex + ": " + p1Game);
+                            p1GameIndex++;
+                        }
+
+                        Console.WriteLine("\nComputer SevensOut Stats:");
+
+                        int compGameIndex = 1;
+                        foreach (int compGame in Statistics.computerSevensScores)
+                        {
+                            Console.WriteLine("Game " + compGameIndex + ": " + compGame);
+                            compGameIndex++;
+                        }
+
+
+
+                        Console.WriteLine("\nPlayer 1 ThreeOrMore Stats:");
+
+                        p1GameIndex = 1;
+                        foreach (int p1Game in Statistics.player1ThreeScores)
+                        {
+                            Console.WriteLine("Game " + p1GameIndex + ": " + p1Game);
+                            p1GameIndex++;
+                        }
+
+                        Console.WriteLine("\nComputer ThreeOrMore Stats:");
+
+                        compGameIndex = 1;
+                        foreach (int compGame in Statistics.computerThreeScores)
+                        {
+                            Console.WriteLine("Game " + compGameIndex + ": " + compGame);
+                            compGameIndex++;
+                        }
+                    }
+
+
+
+
                 }
 
 
@@ -142,12 +242,7 @@ namespace CMP1903_A1_2324
 
         public static string Menu()
         {
-            
-            Statistics.player1 = true;
-            Statistics.computer = false;
-
-            Statistics.player1Points = 0;
-            Statistics.computerPoints = 0;
+            Statistics.Reset();
 
             Console.WriteLine("\n---------------------------------------------");
             Console.WriteLine("SevensOut or ThreeOrMore or Stats or Quit (1,2,3,4): ");
@@ -400,11 +495,15 @@ namespace CMP1903_A1_2324
                     {
                         if (Statistics.player1Points > Statistics.computerPoints)
                         {
+                            Statistics.totalPlayer1Points = Statistics.player1Points;
+                            Statistics.totalComputerPoints = Statistics.computerPoints;
                             return Statistics.player1Points;
                         }
 
                         else if (Statistics.player1Points < Statistics.computerPoints)
                         {
+                            Statistics.totalPlayer1Points = Statistics.player1Points;
+                            Statistics.totalComputerPoints = Statistics.computerPoints;
                             return Statistics.computerPoints;
                         }
 

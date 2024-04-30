@@ -9,21 +9,30 @@ namespace CMP1903_A1_2324
         {
             // testing is run before the final output
             Game.isTesting = true;
-            TestDiceRollValue();
-            TestDiceRollSum();
+            TestSevensOut();
+            //TestDiceSumSevensOut();
             Game.isTesting = false;
         }
-        public void TestDiceRollValue()
+        public void TestSevensOut()
         {
-            // Creates new TestVal object
-            Die test = new Die();
-            int TestVal = test.Roll();
+            Game.SevensOut sevensOutTest = new Game.SevensOut();
 
-            // Tests if die value is inside bounds
-            Debug.Assert(TestVal > 0 && TestVal < 7, "Dice value is out of bounds."); 
+            int total = 0;
+            while (true)
+            {
+                total = sevensOutTest.DiceGame();
+                Debug.Assert(total > 2 && total < 19, "Total sum of the rolled dice, is out of bounds");
+
+                Debug.Assert(total != 7, "\nTest Failed: Game didn't stop when total equals 7.\n");
+                if (total == 7)
+                {
+                    Debug.WriteLine("Test Passed: Game stops when total equals 7.");
+                    break;
+                }
+            }
         }
 
-        public void TestDiceRollSum()
+        public void TestDiceSumSevensOut()
         {
             // Creates new TestSum object
             Game.SevensOut testPlay = new Game.SevensOut();
@@ -31,6 +40,20 @@ namespace CMP1903_A1_2324
 
             // Tests if sum is inside bounds
             Debug.Assert(TestSum > 1 && TestSum < 13, "Total sum of the rolled dice, is out of bounds");
+            /*Debug.Assert(TestSum == 7, "Game Over");*/
         }
+
+        
     }
 }
+
+
+
+
+
+
+
+
+
+
+
