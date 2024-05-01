@@ -44,6 +44,8 @@ namespace CMP1903_A1_2324
             }
         }
 
+        
+
         internal static void Test()
         {
             // displays SevensOut testing
@@ -51,10 +53,14 @@ namespace CMP1903_A1_2324
             GameTester sevensOutTester = new SevensOutTester();
             sevensOutTester.TestGame();
 
+            Statistics.Reset();
+
             // displays ThreeOrMore testing
-            Console.WriteLine("Testing ThreeOrMore in progress...");
+            Console.WriteLine("\nTesting ThreeOrMore in progress...");
             GameTester threeOrMoreTester = new ThreeOrMoreTester();
             threeOrMoreTester.TestGame();
+
+            Statistics.Reset();
         }
     }
 }

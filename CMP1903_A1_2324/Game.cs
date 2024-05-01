@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 
 namespace CMP1903_A1_2324
 {
@@ -8,9 +9,25 @@ namespace CMP1903_A1_2324
     {
         public static void Main(string[] _)
         {
-            // Tests run first
-            Testing.Test();
+            // asks he user if they want to run tests or if they want to start playing the game.
+            Console.WriteLine("Run Tests or Begin Game? (1/2): ");
+            String startChoice = Console.ReadLine();
 
+            // exception handling
+            while ((startChoice != "1") && (startChoice != "2"))
+            {
+                Console.WriteLine("Invalid Input");
+                Console.WriteLine("Run Tests or Begin Game? (1/2): ");
+                startChoice = Console.ReadLine();
+            }
+
+            // Tests run first
+            if (startChoice == "1")
+            {
+                Testing.Test();
+            }
+
+            // games begin
             while (true)
             {
                 string gameChoice = Menu();
