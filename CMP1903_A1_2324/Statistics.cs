@@ -107,6 +107,24 @@ namespace CMP1903_A1_2324
                     Console.WriteLine("Game " + compGameIndex + ": " + compGame);
                     compGameIndex++;
                 }
+
+                Console.WriteLine("\nPlayer 1 ThreeOrMore Stats:");
+
+                p1GameIndex = 1;
+                foreach (int p1Game in player1ThreeScores)
+                {
+                    Console.WriteLine("Game " + p1GameIndex + ": " + p1Game);
+                    p1GameIndex++;
+                }
+
+                Console.WriteLine("\nComputer ThreeOrMore Stats:");
+
+                compGameIndex = 1;
+                foreach (int compGame in computerThreeScores)
+                {
+                    Console.WriteLine("Game " + compGameIndex + ": " + compGame);
+                    compGameIndex++;
+                }
             }
         }
     }

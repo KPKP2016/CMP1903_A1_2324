@@ -41,11 +41,9 @@ namespace CMP1903_A1_2324
                         // new instance of SevensOut class
                         // Player1 turn
                         SevensOut playSevenP1 = new SevensOut();
-                        Console.WriteLine("Player 1 Points: " + playSevenP1.DiceGame() + "\n"); // DiceGame method created
+                        Console.WriteLine("Player 1 Points: " + playSevenP1.DiceGame() + "\n"); // DiceGame method called
 
-                        // after SevensOut game played, the final total is appended to a list for scores
-                        Statistics.player1SevensScores.Add(Statistics.totalPlayer1Points);
-                        Statistics.computerSevensScores.Add(Statistics.totalComputerPoints);
+
 
                         // if total of 2 dice is 7
                         if (Statistics.player1Points == 7)
@@ -74,6 +72,10 @@ namespace CMP1903_A1_2324
                             }
                         }
                     }
+
+                    // after SevensOut game played, the final total is appended to a list for scores
+                    Statistics.player1SevensScores.Add(Statistics.totalPlayer1Points);
+                    Statistics.computerSevensScores.Add(Statistics.totalComputerPoints);
                 }
 
                 // gameChoice 2 is ThreeOrMore
